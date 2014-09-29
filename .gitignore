@@ -5,6 +5,9 @@
 # Files for the Dalvik VM
 *.dex
 
+# IntelliJ files
+.idea
+
 # Java class files
 *.class
 
