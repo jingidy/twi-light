@@ -16,5 +16,6 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_tweet">Tweet</string>
     <string name="compose_title">Compose</string>
+    <string name="label_tweeting">Tweeting...</string>
 
 </resources>

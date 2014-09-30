@@ -3,7 +3,7 @@ Twilight
 
 Codepath Project: Simple Twitter Client
 
-Time taken: 2 hours
+Time taken: 4 hours 50 minutes
 
 # Completed User Stories
 
