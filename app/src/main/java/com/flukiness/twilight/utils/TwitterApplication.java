@@ -1,4 +1,4 @@
-package com.flukiness.twilight;
+package com.flukiness.twilight.utils;
 
 import android.content.Context;
 

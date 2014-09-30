@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.TwitterApplication;
-import com.flukiness.twilight.TwitterClient;
+import com.flukiness.twilight.utils.TwitterApplication;
+import com.flukiness.twilight.utils.TwitterClient;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
 import com.flukiness.twilight.models.Tweet;
+import com.flukiness.twilight.utils.EndlessScrollingListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -36,7 +36,16 @@ public class TimelineActivity extends Activity {
         aTweets = new TweetArrayAdapter(this, tweets);
         lvTweets.setAdapter(aTweets);
 
-        populateTimeline();
+        lvTweets.setOnScrollListener(new EndlessScrollingListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalCount) {
+                Tweet t = aTweets.getOldest();
+                populateTimeline(0, t != null ? t.getUid() - 1 : 0);
+                return true;
+            }
+        });
+
+        populateTimeline(0, 0);
     }
 
 
@@ -59,8 +68,8 @@ public class TimelineActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+    public void populateTimeline(long greaterThanId, long lessOrEqToId) {
+        client.getHomeTimeline(greaterThanId, lessOrEqToId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 aTweets.addAll(Tweet.fromJsonArray(jsonArray));

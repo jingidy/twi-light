@@ -60,4 +60,18 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         imageLoader.displayImage(u.getProfileImageUrl(), viewHolder.ivProfileImage);
         return convertView;
     }
+
+    public Tweet getOldest() {
+        if (getCount() == 0) {
+            return null;
+        }
+        return getItem(getCount() - 1);
+    }
+
+    public Tweet getNewest() {
+        if (getCount() == 0) {
+            return null;
+        }
+        return getItem(0);
+    }
 }

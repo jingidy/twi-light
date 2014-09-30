@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.TwitterClient;
+import com.flukiness.twilight.utils.TwitterClient;
 
 public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
 

@@ -1,4 +1,4 @@
-package com.flukiness.twilight;
+package com.flukiness.twilight.utils;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.FlickrApi;
@@ -52,8 +52,20 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 
-    public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+    public void getHomeTimeline(long greaterThanId, long lessOrEqId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
-        client.get(apiUrl, null, handler);
+
+        RequestParams params = null;
+        if (greaterThanId != 0 || lessOrEqId != 0) {
+            params = new RequestParams();
+            if (greaterThanId != 0) {
+                params.put("since_id", String.valueOf(greaterThanId));
+            }
+            if (lessOrEqId != 0) {
+                params.put("max_id", String.valueOf(lessOrEqId));
+            }
+        }
+
+        client.get(apiUrl, params, handler);
     }
 }
