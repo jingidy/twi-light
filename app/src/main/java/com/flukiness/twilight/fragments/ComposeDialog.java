@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.flukiness.twilight.R;
+import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -26,6 +27,10 @@ public class ComposeDialog extends DialogFragment {
 
     private EditText etTweetText;
     private Button btnSubmit;
+
+    public interface ComposeDialogListener {
+        void onTweetPosted(Tweet t);
+    }
 
     public static ComposeDialog newInstance() {
         ComposeDialog fragment = new ComposeDialog();
@@ -74,7 +79,13 @@ public class ComposeDialog extends DialogFragment {
     }
 
     private void handleSuccess(JSONObject jsonObject) {
-        Toast.makeText(getActivity(), jsonObject.toString(), Toast.LENGTH_SHORT).show();
+        Tweet t = Tweet.fromJson(jsonObject);
+        if (t == null) {
+            Log.d("DEBUG", "successfully posted tweet but no tweet json");
+        } else {
+            ComposeDialogListener listener = (ComposeDialogListener) getActivity();
+            listener.onTweetPosted(t);
+        }
         dismiss();
     }
 

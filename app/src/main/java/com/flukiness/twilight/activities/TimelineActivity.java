@@ -21,7 +21,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class TimelineActivity extends FragmentActivity {
+public class TimelineActivity extends FragmentActivity implements ComposeDialog.ComposeDialogListener {
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
@@ -90,5 +90,11 @@ public class TimelineActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         ComposeDialog dialog = ComposeDialog.newInstance();
         dialog.show(fm, "fragment_compose");
+    }
+
+    @Override
+    public void onTweetPosted(Tweet t) {
+        lvTweets.smoothScrollToPosition(0);
+        aTweets.insert(t, 0);
     }
 }
