@@ -64,6 +64,7 @@ public class ComposeDialog extends DialogFragment {
     public void sendTweet() {
         TwitterClient client = TwitterApplication.getRestClient();
         String text = etTweetText.getText().toString();
+        btnSubmit.setText(R.string.label_tweeting);
         if (text.length() > 0) {
             client.pushUpdate(text, new JsonHttpResponseHandler() {
                 @Override
@@ -81,18 +82,20 @@ public class ComposeDialog extends DialogFragment {
     private void handleSuccess(JSONObject jsonObject) {
         Tweet t = Tweet.fromJson(jsonObject);
         if (t == null) {
-            Log.d("DEBUG", "successfully posted tweet but no tweet json");
+            Log.d("DEBUG", "successfully posted tweet but  no tweet json");
         } else {
             ComposeDialogListener listener = (ComposeDialogListener) getActivity();
             listener.onTweetPosted(t);
         }
         dismiss();
+        btnSubmit.setText(R.string.label_tweet);
     }
 
     private void handleError(Throwable e, String s) {
         //TODO: Better error handling
         Log.d("DEBUG", e.toString());
         Toast.makeText(getActivity(), "Failed to post tweet", Toast.LENGTH_SHORT).show();
+        btnSubmit.setText(R.string.label_tweet);
     }
 
 }
