@@ -1,5 +1,7 @@
 package com.flukiness.twilight.models;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,5 +58,9 @@ public class User {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public void getScreenNameUIString(Context context) {
+
     }
 }

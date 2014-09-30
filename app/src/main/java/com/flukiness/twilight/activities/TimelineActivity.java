@@ -1,13 +1,15 @@
 package com.flukiness.twilight.activities;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.flukiness.twilight.R;
+import com.flukiness.twilight.fragments.ComposeDialog;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
@@ -19,7 +21,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends FragmentActivity {
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
@@ -62,7 +64,8 @@ public class TimelineActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_compose) {
+            showComposeDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -81,5 +84,11 @@ public class TimelineActivity extends Activity {
                 Log.d("DEBUG", e.toString());
             }
         });
+    }
+
+    public void showComposeDialog () {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeDialog dialog = ComposeDialog.newInstance();
+        dialog.show(fm, "fragment_compose");
     }
 }

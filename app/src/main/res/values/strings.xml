@@ -10,5 +10,11 @@
     <string name="day_abbreviation">d</string>
     <string name="hour_abbreviation">h</string>
     <string name="min_abbreviation">m</string>
+    <string name="action_compose">Compose</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_tweet_hint">What\'s happening?</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_tweet">Tweet</string>
+    <string name="compose_title">Compose</string>
 
 </resources>
