@@ -27,6 +27,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvUsername;
         TextView tvBody;
         TextView tvName;
+        TextView tvTime;
     }
 
     public TweetArrayAdapter(Context context, ArrayList<Tweet> objects) {
@@ -45,6 +46,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
             viewHolder.tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
             viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
             viewHolder.tvName = (TextView) convertView.findViewById(R.id.tvName);
+            viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tvTime);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -54,6 +56,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.tvName.setText(u.getName());
         viewHolder.tvUsername.setText(u.getScreenName());
         viewHolder.tvBody.setText(t.getBody());
+        viewHolder.tvTime.setText(t.getCreatedTimeUIString(getContext()));
         imageLoader.displayImage(u.getProfileImageUrl(), viewHolder.ivProfileImage);
         return convertView;
     }

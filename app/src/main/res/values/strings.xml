@@ -7,5 +7,8 @@
     <string name="title_activity_photos">Flickr Photos</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="day_abbreviation">d</string>
+    <string name="hour_abbreviation">h</string>
+    <string name="min_abbreviation">m</string>
 
 </resources>

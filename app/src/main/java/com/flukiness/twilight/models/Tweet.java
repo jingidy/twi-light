@@ -1,18 +1,33 @@
 package com.flukiness.twilight.models;
 
+import android.content.Context;
+
+import com.flukiness.twilight.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Jing Jin on 9/28/14.
  */
 public class Tweet {
+    private static SimpleDateFormat dateParser = new SimpleDateFormat("EEE MMM d k:m:s z yyyy");
+    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM d");
+    private static long minInMilliseconds = 60 * 1000;
+    private static long hourInMilliSeconds = 60 * minInMilliseconds;
+    private static long dayInMilliseconds = 24 * hourInMilliSeconds;
+
     private String body;
     private long uid;
-    private String createdAt;
+    private Date createdTime;
     private User user;
 
     public static Tweet fromJson(JSONObject json) {
@@ -21,10 +36,15 @@ public class Tweet {
         try {
             t.body = json.getString("text"); // TODO: Use static vars for keys
             t.uid = json.getLong("id");
-            t.createdAt = json.getString("created_at");
             t.user = User.fromJson(json.getJSONObject("user"));
 
+            String createdString = json.getString("created_at");
+            t.createdTime = dateParser.parse(createdString);
+
         } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
@@ -70,20 +90,41 @@ public class Tweet {
         this.uid = uid;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getCreatedTimeUIString(Context context) {
+        long diffInMilliseconds = new Date().getTime() - createdTime.getTime();
+
+        long daysAgo = (diffInMilliseconds) / dayInMilliseconds;
+        if (daysAgo > 30) {
+            return dateFormatter.format(createdTime);
+        }
+        if (daysAgo > 0) {
+            return daysAgo + context.getString(R.string.day_abbreviation);
+        }
+
+        long hoursAgo = diffInMilliseconds / hourInMilliSeconds;
+        if (hoursAgo > 0) {
+            return hoursAgo + context.getString(R.string.hour_abbreviation);
+        }
+
+        long minAgo = diffInMilliseconds / minInMilliseconds;
+        return minAgo + context.getString(R.string.min_abbreviation);
+
     }
 
     @Override
