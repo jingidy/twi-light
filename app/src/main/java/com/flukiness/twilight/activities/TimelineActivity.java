@@ -1,5 +1,7 @@
 package com.flukiness.twilight.activities;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +12,10 @@ import android.widget.ListView;
 
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.fragments.ComposeDialog;
+import com.flukiness.twilight.fragments.HomeTimelineFragment;
+import com.flukiness.twilight.fragments.MentionsTimelineFragment;
+import com.flukiness.twilight.fragments.TweetsListFragment;
+import com.flukiness.twilight.utils.FragmentTabListener;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
@@ -22,34 +28,15 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class TimelineActivity extends FragmentActivity implements ComposeDialog.ComposeDialogListener {
-    private TwitterClient client;
-    private ArrayList<Tweet> tweets;
-    private TweetArrayAdapter aTweets;
-    private ListView lvTweets;
+    private HomeTimelineFragment homeTweetsList;
+    private MentionsTimelineFragment mentionsTweetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        lvTweets = (ListView)findViewById(R.id.lvTweets);
-
-        client = TwitterApplication.getRestClient();
-        tweets = new ArrayList<Tweet>();
-        aTweets = new TweetArrayAdapter(this, tweets);
-        lvTweets.setAdapter(aTweets);
-
-        lvTweets.setOnScrollListener(new EndlessScrollingListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalCount) {
-                Tweet t = aTweets.getOldest();
-                populateTimeline(0, t != null ? t.getUid() - 1 : 0);
-                return true;
-            }
-        });
-
-        populateTimeline(0, 0);
+        setupTabs();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,19 +58,33 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialog.
         return super.onOptionsItemSelected(item);
     }
 
-    public void populateTimeline(long greaterThanId, long lessOrEqToId) {
-        client.getHomeTimeline(greaterThanId, lessOrEqToId, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONArray jsonArray) {
-                aTweets.addAll(Tweet.fromJsonArray(jsonArray));
-            }
+    private void setupTabs() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(true);
 
-            @Override
-            public void onFailure(Throwable e, String s) {
-                //TODO: Better error handling
-                Log.d("DEBUG", e.toString());
-            }
-        });
+        Tab tab1 = actionBar
+                .newTab()
+                .setText("Home")
+                .setIcon(R.drawable.ic_launcher)
+                .setTag("HomeTimelineFragment")
+                .setTabListener(
+                        new FragmentTabListener<HomeTimelineFragment>(R.id.flContainer, this, "home",
+                                HomeTimelineFragment.class));
+
+        actionBar.addTab(tab1);
+        actionBar.selectTab(tab1);
+
+        Tab tab2 = actionBar
+                .newTab()
+                .setText("Mentions")
+                .setIcon(R.drawable.ic_launcher)
+                .setTag("MentionsTimelineFragment")
+                .setTabListener(
+                        new FragmentTabListener<MentionsTimelineFragment>(R.id.flContainer, this, "mentions",
+                                MentionsTimelineFragment.class));
+
+        actionBar.addTab(tab2);
     }
 
     public void showComposeDialog () {
@@ -94,7 +95,8 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialog.
 
     @Override
     public void onTweetPosted(Tweet t) {
-        lvTweets.smoothScrollToPosition(0);
-        aTweets.insert(t, 0);
+        //TODO: Uncomment
+//        lvTweets.smoothScrollToPosition(0);
+//        aTweets.insert(t, 0);
     }
 }

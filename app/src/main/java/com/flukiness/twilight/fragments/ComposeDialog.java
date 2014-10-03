@@ -17,7 +17,6 @@ import com.flukiness.twilight.R;
 import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
