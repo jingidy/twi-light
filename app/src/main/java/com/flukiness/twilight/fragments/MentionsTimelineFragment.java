@@ -26,32 +26,11 @@ public class MentionsTimelineFragment extends TweetsListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        //TODO: Uncomment
-//        lvTweets.setOnScrollListener(new EndlessScrollingListener() {
-//            @Override
-//            public boolean onLoadMore(int page, int totalCount) {
-//                Tweet t = aTweets.getOldest();
-//                populateTimeline(0, t != null ? t.getUid() - 1 : 0);
-//                return true;
-//            }
-//        });
-        // FIXME: Don't duplicate content when coming back to this tab
-        populateTimeline(0, 0);
         return v;
     }
 
-    public void populateTimeline(long greaterThanId, long lessOrEqToId) {
-        getClient().getMentionsTimeline(greaterThanId, lessOrEqToId, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONArray jsonArray) {
-                addAll(Tweet.fromJsonArray(jsonArray));
-            }
-
-            @Override
-            public void onFailure(Throwable e, String s) {
-                //TODO: Better error handling
-                Log.d("DEBUG", e.toString());
-            }
-        });
+    @Override
+    public TwitterClient.TimelineType getTimelineType() {
+        return TwitterClient.TimelineType.MentionsTimeline;
     }
 }
