@@ -9,6 +9,8 @@ import org.json.JSONObject;
  * Created by Jing Jin on 9/28/14.
  */
 public class User {
+    public static final String userPrefix = "@";
+
     private String name;
     private long uid;
     private String screenName;

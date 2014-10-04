@@ -95,4 +95,9 @@ public abstract class TweetsListFragment extends Fragment {
             }
         });
     }
+
+    public void onTweetPosted(Tweet t) {
+        lvTweets.smoothScrollToPosition(0);
+        aTweets.insert(t, 0);
+    }
 }

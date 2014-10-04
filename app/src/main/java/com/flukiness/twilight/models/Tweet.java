@@ -1,6 +1,7 @@
 package com.flukiness.twilight.models;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.flukiness.twilight.R;
 
@@ -130,5 +131,9 @@ public class Tweet {
     @Override
     public String toString() {
         return getBody() + " - " + getUser().getScreenName();
+    }
+
+    public boolean mentionsUser(String username) {
+        return body == null ? false : body.matches(".*\\b\\" + User.userPrefix + username + "\\b.*");
     }
 }

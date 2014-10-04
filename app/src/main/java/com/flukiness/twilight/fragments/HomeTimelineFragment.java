@@ -33,5 +33,4 @@ public class HomeTimelineFragment extends TweetsListFragment {
     public TwitterClient.TimelineType getTimelineType() {
         return TwitterClient.TimelineType.HomeTimeline;
     }
-
 }

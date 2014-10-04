@@ -33,4 +33,13 @@ public class MentionsTimelineFragment extends TweetsListFragment {
     public TwitterClient.TimelineType getTimelineType() {
         return TwitterClient.TimelineType.MentionsTimeline;
     }
+
+    @Override
+    public void onTweetPosted(Tweet t) {
+        // Only update if the tweet mentions the user
+        Log.d("debug", "username = " + t.getUser().getScreenName());
+        if (t.mentionsUser(t.getUser().getScreenName())) {
+            super.onTweetPosted(t);
+        }
+    }
 }
