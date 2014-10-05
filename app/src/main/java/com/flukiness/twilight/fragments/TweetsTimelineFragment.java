@@ -119,6 +119,8 @@ public abstract class TweetsTimelineFragment extends Fragment {
             progressBar = new ProgressBar(getActivity());
             progressBar.setIndeterminate(true);
 
+        }
+        if (lvTweets.getFooterViewsCount() == 0) {
             lvTweets.addFooterView(progressBar);
         }
         progressBar.setVisibility(View.VISIBLE);
