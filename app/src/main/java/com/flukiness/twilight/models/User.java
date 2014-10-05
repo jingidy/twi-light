@@ -1,6 +1,8 @@
 package com.flukiness.twilight.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Jing Jin on 9/28/14.
  */
-public class User {
+public class User implements Parcelable {
     public static final String userPrefix = "@";
 
     private String name;
@@ -105,4 +107,43 @@ public class User {
     public void setNumFollowers(int numFollowers) {
         this.numFollowers = numFollowers;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeLong(this.uid);
+        dest.writeString(this.screenName);
+        dest.writeString(this.profileImageUrl);
+        dest.writeString(this.description);
+        dest.writeInt(this.numFollowers);
+        dest.writeInt(this.numFollowing);
+    }
+
+    public User() {
+    }
+
+    private User(Parcel in) {
+        this.name = in.readString();
+        this.uid = in.readLong();
+        this.screenName = in.readString();
+        this.profileImageUrl = in.readString();
+        this.description = in.readString();
+        this.numFollowers = in.readInt();
+        this.numFollowing = in.readInt();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

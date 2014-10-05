@@ -40,15 +40,18 @@ public class TwitterClient extends OAuthBaseClient {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
-    public void getTimeline(TimelineType type, long greaterThanId, long lessOrEqId, AsyncHttpResponseHandler handler) {
+    public void getTimeline(TimelineType type, long greaterThanId, long lessOrEqId,long uid,  AsyncHttpResponseHandler handler) {
         RequestParams params = null;
-        if (greaterThanId != 0 || lessOrEqId != 0) {
+        if (greaterThanId != 0 || lessOrEqId != 0 || uid != 0) {
             params = new RequestParams();
             if (greaterThanId != 0) {
                 params.put("since_id", String.valueOf(greaterThanId));
             }
             if (lessOrEqId != 0) {
                 params.put("max_id", String.valueOf(lessOrEqId));
+            }
+            if (uid != 0) {
+                params.put("user_id", String.valueOf(uid));
             }
         }
 
@@ -90,5 +93,12 @@ public class TwitterClient extends OAuthBaseClient {
     public void getMyInfo(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("account/verify_credentials.json");
         client.get(apiUrl, null, handler);
+    }
+
+    public void getUserInfo(long uid, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("users/show.json");
+        RequestParams params = new RequestParams();
+        params.put("user_id", String.valueOf(uid));
+        client.get(apiUrl, params, handler);
     }
 }

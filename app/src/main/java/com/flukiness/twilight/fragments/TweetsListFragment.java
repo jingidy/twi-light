@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
 import com.flukiness.twilight.models.Tweet;
+import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.EndlessScrollingListener;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
@@ -37,6 +38,11 @@ public abstract class TweetsListFragment extends Fragment {
     }
 
     public abstract TwitterClient.TimelineType getTimelineType();
+
+    public User getUserToShow() {
+        // Sublcasses and override to show only 1 user's timeline
+        return null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,8 @@ public abstract class TweetsListFragment extends Fragment {
     }
 
     public void populateTimeline(final long greaterThanId, final long lessOrEqToId) {
-        getClient().getTimeline(getTimelineType(), greaterThanId, lessOrEqToId, new JsonHttpResponseHandler() {
+        User u = getUserToShow();
+        getClient().getTimeline(getTimelineType(), greaterThanId, lessOrEqToId, u == null ? 0 : u.getUid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
                 if (greaterThanId != 0) { // tack on new tweets

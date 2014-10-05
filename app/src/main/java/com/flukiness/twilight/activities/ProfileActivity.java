@@ -3,13 +3,16 @@ package com.flukiness.twilight.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flukiness.twilight.R;
+import com.flukiness.twilight.fragments.UserTimelineFragment;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,13 +23,41 @@ import org.json.JSONObject;
 
 public class ProfileActivity extends FragmentActivity {
 
+    public static final String USER_KEY = "user";
+
+    private User user;
+    JsonHttpResponseHandler userRequestHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        user = (User)getIntent().getParcelableExtra(USER_KEY);
+
+        // Set up a user timeline fragment with the user ID, then load it into th eview.
+        UserTimelineFragment fragmentUserTimeline = new UserTimelineFragment();
+        fragmentUserTimeline.setUser(user);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.flUserTimeline, fragmentUserTimeline);
+        ft.commit();
+
+        userRequestHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject json) {
+                User u = User.fromJson(json);
+                getActionBar().setTitle(u.getScreenName());
+                populateProfileHeader(u);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable, String s) {
+                Log.d("debug", s);
+                super.onFailure(throwable, s);
+            }
+        };
+
         loadProfileInfo();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,21 +79,13 @@ public class ProfileActivity extends FragmentActivity {
     }
 
     private void loadProfileInfo() {
-        TwitterApplication.getRestClient().getMyInfo(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONObject json) {
-                User u = User.fromJson(json);
-                getActionBar().setTitle(u.getScreenName());
-                populateProfileHeader(u);
-            }
-
-            @Override
-            public void onFailure(Throwable throwable, String s) {
-                Log.d("debug", s);
-                super.onFailure(throwable, s);
-            }
-        });
+        if (user == null) { // Get self profile
+            TwitterApplication.getRestClient().getMyInfo(userRequestHandler);
+        } else {
+            TwitterApplication.getRestClient().getUserInfo(user.getUid(), userRequestHandler);
+        }
     }
+
 
     private void populateProfileHeader(User u) {
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);

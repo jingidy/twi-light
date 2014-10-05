@@ -11,7 +11,7 @@ Codepath Project: Simple Twitter Client
 
 ### Part 2
 
-4 hours
+5 hours 15 minutes
 
 # Completed User Stories
 
@@ -41,7 +41,7 @@ Codepath Project: Simple Twitter Client
   - [x] # of followers
   - [x] # of following
   - [x] Tweets
-- [ ] User can click on the profile image in any tweet to see another user's profile and see the same categories as the user profile
+- [x] User can click on the profile image in any tweet to see another user's profile and see the same categories as the user profile
 
 ## Optional
 
