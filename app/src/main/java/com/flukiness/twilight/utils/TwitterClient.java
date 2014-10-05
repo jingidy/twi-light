@@ -32,7 +32,8 @@ public class TwitterClient extends OAuthBaseClient {
 
     public enum TimelineType {
         HomeTimeline,
-        MentionsTimeline
+        MentionsTimeline,
+        UserTimeline
     }
 
 	public TwitterClient(Context context) {
@@ -58,6 +59,9 @@ public class TwitterClient extends OAuthBaseClient {
             case MentionsTimeline:
                 getMentionsTimeline(params, handler);
                 break;
+            case UserTimeline:
+                getUserTimeline(params, handler);
+                break;
         }
     }
 
@@ -76,5 +80,15 @@ public class TwitterClient extends OAuthBaseClient {
     private void getMentionsTimeline(RequestParams params, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         client.get(apiUrl, params, handler);
+    }
+
+    private void getUserTimeline(RequestParams params, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        client.get(apiUrl, params, handler);
+    }
+
+    public void getMyInfo(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        client.get(apiUrl, null, handler);
     }
 }

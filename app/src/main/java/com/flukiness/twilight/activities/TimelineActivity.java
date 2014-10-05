@@ -2,6 +2,7 @@ package com.flukiness.twilight.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -97,5 +98,10 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialog.
         if (mentions != null) {
             mentions.onTweetPosted(t);
         }
+    }
+
+    public void onProfileView(MenuItem mi) {
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
     }
 }

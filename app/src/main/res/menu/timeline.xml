@@ -6,4 +6,12 @@
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
+
+
+    <item android:id="@+id/action_profile"
+        android:title="@string/action_profile"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:onClick="onProfileView"/>
 </menu>

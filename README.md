@@ -11,7 +11,7 @@ Codepath Project: Simple Twitter Client
 
 ### Part 2
 
-1 hour 15 minutes
+4 hours
 
 # Completed User Stories
 
@@ -34,13 +34,13 @@ Codepath Project: Simple Twitter Client
 - User can switch between Timeline and Mention views using tabs
   - [x] User can view their home timeline tweets
   - [x] User can view the recent mentions of their username
-  - [ ] User can scroll to bottom of either of these lists and new tweets will load (infinite pagination)
+  - [x] User can scroll to bottom of either of these lists and new tweets will load (infinite pagination)
 - User can navigate to view their own profile and see:
-  - [ ] Picture
-  - [ ] Tagline
-  - [ ] # of followers
-  - [ ] # of following
-  - [ ] Tweets
+  - [x] Picture
+  - [x] Tagline
+  - [x] # of followers
+  - [x] # of following
+  - [x] Tweets
 - [ ] User can click on the profile image in any tweet to see another user's profile and see the same categories as the user profile
 
 ## Optional
