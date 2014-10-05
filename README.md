@@ -64,7 +64,7 @@ Codepath Project: Simple Twitter Client
 
 - Additional UI
   - [ ] User can view followers/following through the profile
-  - [ ] When a network request is sent, user sees an indeterminate progress indicator
+  - [x] When a network request is sent, user sees an indeterminate progress indicator
 - Additional Actions
   - User can "reply" to any tweet on their home timeline
     - [ ] The user that wrote the original tweet is automatically @ replied in compose

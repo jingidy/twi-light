@@ -11,7 +11,7 @@ import com.flukiness.twilight.utils.TwitterClient;
 /**
  * Created by Jing Jin on 10/2/14.
  */
-public class UserTimelineFragment extends TweetsListFragment {
+public class UserTimelineFragment extends TweetsTimelineFragment {
     private User user;
 
     @Override

@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
@@ -27,11 +30,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  *
  */
-public abstract class TweetsListFragment extends Fragment {
+public abstract class TweetsTimelineFragment extends Fragment {
     private static TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
     private ListView lvTweets;
+    private ProgressBar progressBar;
 
     public static TwitterClient getClient() {
         return client;
@@ -76,12 +80,9 @@ public abstract class TweetsListFragment extends Fragment {
         return v;
     }
 
-    public void addAll(ArrayList<Tweet> tweets) {
-        aTweets.addAll(tweets);
-    }
-
     public void populateTimeline(final long greaterThanId, final long lessOrEqToId) {
         User u = getUserToShow();
+        showProgressBar();
         getClient().getTimeline(getTimelineType(), greaterThanId, lessOrEqToId, u == null ? 0 : u.getUid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
@@ -93,12 +94,14 @@ public abstract class TweetsListFragment extends Fragment {
                     aTweets.clear();
                     aTweets.addAll(Tweet.fromJsonArray(jsonArray));
                 }
+                hideProgressBar();
             }
 
             @Override
             public void onFailure(Throwable e, String s) {
                 //TODO: Better error handling
                 Log.d("DEBUG", e.toString());
+                hideProgressBar();
             }
         });
     }
@@ -106,5 +109,24 @@ public abstract class TweetsListFragment extends Fragment {
     public void onTweetPosted(Tweet t) {
         lvTweets.smoothScrollToPosition(0);
         aTweets.insert(t, 0);
+    }
+
+    /*
+     * Shows the indeterminate progress bar in the footer.
+     */
+    private void showProgressBar() {
+        if (progressBar == null) {
+            progressBar = new ProgressBar(getActivity());
+            progressBar.setIndeterminate(true);
+
+            lvTweets.addFooterView(progressBar);
+        }
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    private void hideProgressBar() {
+        if (progressBar == null) {
+            return;
+        }
+        progressBar.setVisibility(View.GONE);
     }
 }
