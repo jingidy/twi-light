@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
@@ -30,16 +28,9 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  *
  */
-public abstract class TweetsTimelineFragment extends Fragment {
-    private static TwitterClient client;
+public abstract class TweetsTimelineFragment extends TwitterClientFragment {
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
-    private ListView lvTweets;
-    private ProgressBar progressBar;
-
-    public static TwitterClient getClient() {
-        return client;
-    }
 
     public abstract TwitterClient.TimelineType getTimelineType();
 
@@ -51,7 +42,6 @@ public abstract class TweetsTimelineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = TwitterApplication.getRestClient();
         tweets = new ArrayList<Tweet>();
         aTweets = new TweetArrayAdapter(getActivity(), tweets);
     }
@@ -59,12 +49,10 @@ public abstract class TweetsTimelineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_tweets_list, container, false);
-        lvTweets = (ListView)v.findViewById(R.id.lvTweets);
-        lvTweets.setAdapter(aTweets);
+        View v = super.onCreateView(inflater, container, savedInstanceState);
+        getLvList().setAdapter(aTweets);
 
-        lvTweets.setOnScrollListener(new EndlessScrollingListener() {
+        getLvList().setOnScrollListener(new EndlessScrollingListener() {
             @Override
             public boolean onLoadMore(int page, int totalCount) {
                 Tweet t = aTweets.getOldest();
@@ -107,28 +95,7 @@ public abstract class TweetsTimelineFragment extends Fragment {
     }
 
     public void onTweetPosted(Tweet t) {
-        lvTweets.smoothScrollToPosition(0);
+        getLvList().smoothScrollToPosition(0);
         aTweets.insert(t, 0);
-    }
-
-    /*
-     * Shows the indeterminate progress bar in the footer.
-     */
-    private void showProgressBar() {
-        if (progressBar == null) {
-            progressBar = new ProgressBar(getActivity());
-            progressBar.setIndeterminate(true);
-
-        }
-        if (lvTweets.getFooterViewsCount() == 0) {
-            lvTweets.addFooterView(progressBar);
-        }
-        progressBar.setVisibility(View.VISIBLE);
-    }
-    private void hideProgressBar() {
-        if (progressBar == null) {
-            return;
-        }
-        progressBar.setVisibility(View.GONE);
     }
 }

@@ -21,5 +21,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="posfix_followers_label"> followers</string>
     <string name="posfix_following_label"> following</string>
+    <string name="title_activity_users">UsersActivity</string>
 
 </resources>

@@ -1,24 +1,24 @@
 package com.flukiness.twilight.activities;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.fragments.UserTimelineFragment;
+import com.flukiness.twilight.fragments.ProfileTimelineFragment;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ProfileActivity extends FragmentActivity {
@@ -35,7 +35,7 @@ public class ProfileActivity extends FragmentActivity {
         user = (User)getIntent().getParcelableExtra(USER_KEY);
 
         // Set up a user timeline fragment with the user ID, then load it into th eview.
-        UserTimelineFragment fragmentUserTimeline = new UserTimelineFragment();
+        ProfileTimelineFragment fragmentUserTimeline = new ProfileTimelineFragment();
         fragmentUserTimeline.setUser(user);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flUserTimeline, fragmentUserTimeline);
@@ -88,17 +88,36 @@ public class ProfileActivity extends FragmentActivity {
 
 
     private void populateProfileHeader(User u) {
+        user = u;
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         TextView tvName = (TextView) findViewById(R.id.tvName);
         TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
-        TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
-        TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+        Button btnFollowers = (Button) findViewById(R.id.btnFollowers);
+        Button btnFollowing = (Button) findViewById(R.id.btnFollowing);
 
         tvName.setText(u.getName());
         tvTagline.setText(u.getDescription());
-        tvFollowers.setText(u.getNumFollowers() + getString(R.string.posfix_followers_label));
-        tvFollowing.setText(u.getNumFollowing() + getString(R.string.posfix_following_label));
+        btnFollowers.setText(u.getNumFollowers() + getString(R.string.posfix_followers_label));
+        btnFollowing.setText(u.getNumFollowing() + getString(R.string.posfix_following_label));
+
+        btnFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFollowers(view);
+            }
+        });
 
         ImageLoader.getInstance().displayImage(u.getProfileImageUrl(), ivProfileImage);
+    }
+
+    public void showFollowers(View v) {
+        Intent i = new Intent(this, FollowersActivity.class);
+        i.putExtra(USER_KEY, this.user);
+        startActivity(i);
+
+    }
+
+    public void showFollowing(View v) {
+        //TODO: Implement
     }
 }

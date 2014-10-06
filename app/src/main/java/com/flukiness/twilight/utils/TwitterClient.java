@@ -1,5 +1,6 @@
 package com.flukiness.twilight.utils;
 
+import org.json.JSONArray;
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.TwitterApi;
@@ -10,6 +11,9 @@ import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  * 
@@ -30,10 +34,17 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final String REST_CONSUMER_SECRET = "kJLCwg27Fkxo9pC82n3zPw1bRjAItfGjP9us97lWmyI7lmZQ46"; // FIXME: GAH! NOOO!!!
 	public static final String REST_CALLBACK_URL = "oauth://cpbasictweets";
 
-    public enum TimelineType {
+    private static final int userListSizeLimit = 100;
+
+    public static enum TimelineType {
         HomeTimeline,
         MentionsTimeline,
         UserTimeline
+    }
+
+    public static enum UsersListType {
+        Followers,
+        Following
     }
 
 	public TwitterClient(Context context) {
@@ -99,6 +110,37 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("users/show.json");
         RequestParams params = new RequestParams();
         params.put("user_id", String.valueOf(uid));
+        client.get(apiUrl, params, handler);
+    }
+
+    public void getUsersForType(UsersListType type, long fromUid, long cursor, AsyncHttpResponseHandler handler) {
+        switch (type) {
+            case Followers:
+                getFollowers(fromUid, cursor, handler);
+                break;
+            case Following:
+                getFollowing(fromUid, cursor, handler);
+                break;
+        }
+    }
+
+    private void getFollowing(long fromUid, long cursor, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("friends/list.json");
+        RequestParams params = new RequestParams();
+        params.put("user_id", String.valueOf(fromUid));
+        if (cursor != 0) {
+            params.put("cursor", String.valueOf(cursor));
+        }
+        client.get(apiUrl, params, handler);
+    }
+
+    private void getFollowers(long fromUid, long cursor, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("followers/list.json");
+        RequestParams params = new RequestParams();
+        params.put("user_id", String.valueOf(fromUid));
+        if (cursor != 0) {
+            params.put("cursor", String.valueOf(cursor));
+        }
         client.get(apiUrl, params, handler);
     }
 }

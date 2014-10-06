@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <view
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_launcher"
+        class="com.flukiness.twilight.views.ProfileImageView"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/tvName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="body text"
+        android:id="@+id/tvCaption"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_below="@+id/tvUsername"
+        android:layout_toRightOf="@+id/ivProfileImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@username"
+        android:id="@+id/tvUsername"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_below="@+id/tvName"
+        android:layout_toRightOf="@+id/ivProfileImage" />
+
+</RelativeLayout>

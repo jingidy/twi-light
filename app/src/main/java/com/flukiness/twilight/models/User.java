@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +47,28 @@ public class User implements Parcelable {
             return null;
         }
         return u;
+    }
+
+    public static ArrayList<User> fromJsonArray(JSONArray jsonArray) {
+        int length = jsonArray.length();
+        ArrayList<User> users = new ArrayList<User>(length);
+
+        for (int i = 0; i < length; i++) {
+            JSONObject userJson = null;
+            try {
+                userJson = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            User u = User.fromJson(userJson);
+            if (u != null) {
+                users.add(u);
+            }
+        }
+
+        return users;
     }
 
     public String getName() {
