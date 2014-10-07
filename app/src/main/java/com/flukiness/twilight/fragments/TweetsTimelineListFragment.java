@@ -8,15 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
-import com.flukiness.twilight.R;
 import com.flukiness.twilight.adapters.TweetArrayAdapter;
 import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.EndlessScrollingListener;
-import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -28,7 +24,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  *
  */
-public abstract class TweetsTimelineFragment extends TwitterClientFragment {
+public abstract class TweetsTimelineListFragment extends TwitterClientListFragment {
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
 
@@ -68,28 +64,30 @@ public abstract class TweetsTimelineFragment extends TwitterClientFragment {
         return v;
     }
 
-    public void populateTimeline(final long greaterThanId, final long lessOrEqToId) {
+    @Override
+    public void refreshList() {
+        populateTimeline(0, 0);
+    }
+
+    private void populateTimeline(final long greaterThanId, final long lessOrEqToId) {
         User u = getUserToShow();
-        showProgressBar();
+        startingTwitterClientRequest();
+
         getClient().getTimeline(getTimelineType(), greaterThanId, lessOrEqToId, u == null ? 0 : u.getUid(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonArray) {
-                if (greaterThanId != 0) { // tack on new tweets
-                    //TODO: Implement pull to refresh
-                } else if (lessOrEqToId != 0) { // tack on old tweets
-                    aTweets.addAll(Tweet.fromJsonArray(jsonArray));
-                } else { // Doing a fresh load
+                if (isRefreshing()) {
                     aTweets.clear();
-                    aTweets.addAll(Tweet.fromJsonArray(jsonArray));
                 }
-                hideProgressBar();
+                aTweets.addAll(Tweet.fromJsonArray(jsonArray));
+                stoppedTwitterClientRequest();
             }
 
             @Override
             public void onFailure(Throwable e, String s) {
                 //TODO: Better error handling
                 Log.d("DEBUG", e.toString());
-                hideProgressBar();
+                stoppedTwitterClientRequest();
             }
         });
     }

@@ -52,9 +52,8 @@ Codepath Project: Simple Twitter Client
   - [ ] User can see a counter with total number of characters left for tweet
 - [ ] User can see embedded image media within the tweet detail view
 - Additional Actions
-  - [ ] User can refresh tweets timeline by pulling down to refresh
+  - [x] User can refresh tweets timeline by pulling down to refresh
   - [ ] User can tap a tweet to display a "detailed" view of that tweet
-  - [ ] User can select "reply" from detail view to respond to a tweet
 - Persistence
   - [ ] User can open the twitter app offline and see last loaded tweets. Tweets are persisted into SQLite and acan be displayed from the local DB
 - UI Improvements

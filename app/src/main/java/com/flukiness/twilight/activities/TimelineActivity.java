@@ -11,14 +11,14 @@ import android.view.MenuItem;
 
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.fragments.ComposeDialogFragment;
-import com.flukiness.twilight.fragments.HomeTimelineFragment;
-import com.flukiness.twilight.fragments.MentionsTimelineFragment;
+import com.flukiness.twilight.fragments.HomeTimelineListFragment;
+import com.flukiness.twilight.fragments.MentionsTimelineListFragment;
 import com.flukiness.twilight.utils.FragmentTabListener;
 import com.flukiness.twilight.models.Tweet;
 
 public class TimelineActivity extends FragmentActivity implements ComposeDialogFragment.ComposeDialogListener {
-    private FragmentTabListener<HomeTimelineFragment> homeTweetsFragmentListener;
-    private FragmentTabListener<MentionsTimelineFragment> mentionsTweetsFragmentListener;
+    private FragmentTabListener<HomeTimelineListFragment> homeTweetsFragmentListener;
+    private FragmentTabListener<MentionsTimelineListFragment> mentionsTweetsFragmentListener;
 
     private static enum TabTags {
         HomeTimelineTag,
@@ -30,10 +30,10 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        homeTweetsFragmentListener = new FragmentTabListener<HomeTimelineFragment>(R.id.flContainer, this, "home",
-                HomeTimelineFragment.class);
-        mentionsTweetsFragmentListener = new FragmentTabListener<MentionsTimelineFragment>(R.id.flContainer, this, "mentions",
-                MentionsTimelineFragment.class);
+        homeTweetsFragmentListener = new FragmentTabListener<HomeTimelineListFragment>(R.id.flContainer, this, "home",
+                HomeTimelineListFragment.class);
+        mentionsTweetsFragmentListener = new FragmentTabListener<MentionsTimelineListFragment>(R.id.flContainer, this, "mentions",
+                MentionsTimelineListFragment.class);
         setupTabs();
     }
 
@@ -90,11 +90,11 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogF
 
     @Override
     public void onTweetPosted(Tweet t) {
-        HomeTimelineFragment home = (HomeTimelineFragment)homeTweetsFragmentListener.getFragment();
+        HomeTimelineListFragment home = (HomeTimelineListFragment)homeTweetsFragmentListener.getFragment();
         if (home != null) {
             home.onTweetPosted(t);
         }
-        MentionsTimelineFragment mentions = (MentionsTimelineFragment)mentionsTweetsFragmentListener.getFragment();
+        MentionsTimelineListFragment mentions = (MentionsTimelineListFragment)mentionsTweetsFragmentListener.getFragment();
         if (mentions != null) {
             mentions.onTweetPosted(t);
         }

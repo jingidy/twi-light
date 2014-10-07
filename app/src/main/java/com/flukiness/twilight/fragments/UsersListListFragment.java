@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.flukiness.twilight.activities.FollowersActivity;
 import com.flukiness.twilight.adapters.UserArrayAdapter;
-import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.EndlessScrollingListener;
 import com.flukiness.twilight.utils.TwitterClient;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by Jing Jin on 10/2/14.
  */
-public class UsersListFragment extends TwitterClientFragment {
+public class UsersListListFragment extends TwitterClientListFragment {
     private User fromUser;
     private TwitterClient.UsersListType type;
 
@@ -64,21 +63,15 @@ public class UsersListFragment extends TwitterClientFragment {
         getLvList().setOnScrollListener(new EndlessScrollingListener() {
             @Override
             public boolean onLoadMore(int page, int totalCount) {
-                showMoreUsers();
+                populateUsersList();
                 return true;
             }
         });
-        showUsers();
+        populateUsersList();
         return v;
     }
 
-    public void showUsers() {
-        aUsers.clear();
-        next_cursor = -1;
-        showMoreUsers();
-    }
-
-    public void showMoreUsers() {
+    public void populateUsersList() {
         if (gettingMoreUsers) {
             return;
         }
@@ -90,12 +83,14 @@ public class UsersListFragment extends TwitterClientFragment {
         }
 
         gettingMoreUsers = true;
-        showProgressBar();
+        startingTwitterClientRequest();
         getClient().getUsersForType(type, fromUser.getUid(), next_cursor, userArrayRequestHandler);
     }
 
     private void updateUsersAndCursor(JSONObject json) {
-        hideProgressBar();
+        if (isRefreshing()) {
+            aUsers.clear();
+        }
         try {
             if (json.has("next_cursor")) {
                 next_cursor = json.getLong("next_cursor");
@@ -109,6 +104,13 @@ public class UsersListFragment extends TwitterClientFragment {
             e.printStackTrace();
         }
 
+        stoppedTwitterClientRequest();
         gettingMoreUsers = false;
+    }
+
+    @Override
+    public void refreshList() {
+        next_cursor = -1;
+        populateUsersList();
     }
 }

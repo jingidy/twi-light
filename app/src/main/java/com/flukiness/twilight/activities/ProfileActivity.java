@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import com.flukiness.twilight.R;
 import com.flukiness.twilight.fragments.ComposeDialogFragment;
-import com.flukiness.twilight.fragments.HomeTimelineFragment;
-import com.flukiness.twilight.fragments.MentionsTimelineFragment;
-import com.flukiness.twilight.fragments.ProfileTimelineFragment;
+import com.flukiness.twilight.fragments.ProfileTimelineListFragment;
 import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterApplication;
@@ -30,7 +28,7 @@ public class ProfileActivity extends FragmentActivity implements ComposeDialogFr
     public static final String USER_KEY = "user";
 
     private User user;
-    ProfileTimelineFragment fragmentUserTimeline;
+    ProfileTimelineListFragment fragmentUserTimeline;
     JsonHttpResponseHandler userRequestHandler;
 
     @Override
@@ -40,7 +38,7 @@ public class ProfileActivity extends FragmentActivity implements ComposeDialogFr
         user = (User)getIntent().getParcelableExtra(USER_KEY);
 
         // Set up a user timeline fragment with the user ID, then load it into th eview.
-        fragmentUserTimeline = new ProfileTimelineFragment();
+        fragmentUserTimeline = new ProfileTimelineListFragment();
         fragmentUserTimeline.setUser(user);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flUserTimeline, fragmentUserTimeline);

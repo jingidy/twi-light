@@ -12,7 +12,7 @@ import com.flukiness.twilight.utils.TwitterClient;
 /**
  * Created by Jing Jin on 10/2/14.
  */
-public class MentionsTimelineFragment extends TweetsTimelineFragment {
+public class MentionsTimelineListFragment extends TweetsTimelineListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

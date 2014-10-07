@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.fragments.UsersListFragment;
+import com.flukiness.twilight.fragments.UsersListListFragment;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterClient;
 
@@ -27,7 +27,7 @@ public abstract  class UsersListActivity extends FragmentActivity {
         user = (User)getIntent().getParcelableExtra(ProfileActivity.USER_KEY);
 
         // Set up a user list fragment, then load it into the view.
-        UsersListFragment fragmentUsersList = new UsersListFragment();
+        UsersListListFragment fragmentUsersList = new UsersListListFragment();
         Bundle args = new Bundle();
         args.putParcelable(USER_KEY, user);
         args.putInt(TYPE_INDEX_KEY, getType().ordinal());

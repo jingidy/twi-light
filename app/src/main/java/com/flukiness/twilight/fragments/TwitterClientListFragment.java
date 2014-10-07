@@ -4,6 +4,7 @@ package com.flukiness.twilight.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,12 @@ import java.util.ArrayList;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  *
  */
-public abstract class TwitterClientFragment extends Fragment {
+public abstract class TwitterClientListFragment extends Fragment {
     private static TwitterClient client;
     private ProgressBar progressBar;
 
     private ListView lvList;
+    private SwipeRefreshLayout swipeContainer;
 
     public static TwitterClient getClient() {
         return client;
@@ -50,28 +52,52 @@ public abstract class TwitterClientFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         lvList = (ListView)v.findViewById(R.id.lvList);
+
+        swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
+        swipeContainer.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
+
         return v;
     }
 
-    /*
-     * Shows the indeterminate progress bar in the footer.
-     */
-    public void showProgressBar() {
-        if (progressBar == null) {
-            progressBar = new ProgressBar(getActivity());
-            progressBar.setIndeterminate(true);
+    public abstract void refreshList();
 
-        }
-        if (lvList.getFooterViewsCount() == 0) {
-            lvList.addFooterView(progressBar);
-        }
-        progressBar.setVisibility(View.VISIBLE);
+    public boolean isRefreshing() {
+        return swipeContainer.isRefreshing();
     }
-    public void hideProgressBar() {
-        if (progressBar == null) {
-            return;
+
+    /*
+     * Subclasses should call these in pairs.
+     */
+    public void startingTwitterClientRequest() {
+        // Only show progress bar if we're not in pull to refresh
+        if (!swipeContainer.isRefreshing()) {
+            if (progressBar == null) {
+                progressBar = new ProgressBar(getActivity());
+                progressBar.setIndeterminate(true);
+
+            }
+            if (lvList.getFooterViewsCount() == 0) {
+                lvList.addFooterView(progressBar);
+            }
+            progressBar.setVisibility(View.VISIBLE);
         }
-        progressBar.setVisibility(View.GONE);
+    }
+
+    public void stoppedTwitterClientRequest() {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+        swipeContainer.setRefreshing(false);
     }
 
     public ListView getLvList() {

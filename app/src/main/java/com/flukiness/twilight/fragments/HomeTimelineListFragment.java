@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterClient;
 
 /**
  * Created by Jing Jin on 10/2/14.
  */
-public class ProfileTimelineFragment extends TweetsTimelineFragment {
-    private User user;
+public class HomeTimelineListFragment extends TweetsTimelineListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,19 +25,6 @@ public class ProfileTimelineFragment extends TweetsTimelineFragment {
 
     @Override
     public TwitterClient.TimelineType getTimelineType() {
-        return TwitterClient.TimelineType.UserTimeline;
-    }
-
-    @Override
-    public User getUserToShow() {
-        return user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        return TwitterClient.TimelineType.HomeTimeline;
     }
 }
