@@ -11,7 +11,7 @@ Codepath Project: Simple Twitter Client
 
 ### Part 2
 
-5 hours 15 minutes
+8 hours 30 minutes
 
 # Completed User Stories
 
@@ -63,7 +63,7 @@ Codepath Project: Simple Twitter Client
 ### Part 2
 
 - Additional UI
-  - [ ] User can view followers/following through the profile
+  - [x] User can view followers/following through the profile
   - [x] When a network request is sent, user sees an indeterminate progress indicator
 - Additional Actions
   - User can "reply" to any tweet on their home timeline

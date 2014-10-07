@@ -103,21 +103,29 @@ public class ProfileActivity extends FragmentActivity {
         btnFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFollowers(view);
+                showFollowers();
+            }
+        });
+        btnFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFollowing();
             }
         });
 
         ImageLoader.getInstance().displayImage(u.getProfileImageUrl(), ivProfileImage);
     }
 
-    public void showFollowers(View v) {
+    public void showFollowers() {
         Intent i = new Intent(this, FollowersActivity.class);
         i.putExtra(USER_KEY, this.user);
         startActivity(i);
 
     }
 
-    public void showFollowing(View v) {
-        //TODO: Implement
+    public void showFollowing() {
+        Intent i = new Intent(this, FollowingActivity.class);
+        i.putExtra(USER_KEY, this.user);
+        startActivity(i);
     }
 }

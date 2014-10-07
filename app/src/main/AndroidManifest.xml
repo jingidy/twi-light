@@ -55,6 +55,10 @@
             android:name=".activities.FollowersActivity"
             android:label="@string/title_activity_users" >
         </activity>
+        <activity
+            android:name=".activities.FollowingActivity"
+            android:label="@string/title_activity_users" >
+        </activity>
     </application>
 
 </manifest>

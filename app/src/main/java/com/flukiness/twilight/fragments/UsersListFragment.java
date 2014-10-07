@@ -31,6 +31,9 @@ public class UsersListFragment extends TwitterClientFragment {
     private JsonHttpResponseHandler userArrayRequestHandler;
     private long next_cursor = -1;
 
+    //FIXME: It would be better to prevent duplicates with persistence or queuing in the twitter client
+    private boolean gettingMoreUsers = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,6 @@ public class UsersListFragment extends TwitterClientFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         getLvList().setAdapter(aUsers);
-
         getLvList().setOnScrollListener(new EndlessScrollingListener() {
             @Override
             public boolean onLoadMore(int page, int totalCount) {
@@ -66,9 +68,7 @@ public class UsersListFragment extends TwitterClientFragment {
                 return true;
             }
         });
-
         showUsers();
-
         return v;
     }
 
@@ -79,6 +79,17 @@ public class UsersListFragment extends TwitterClientFragment {
     }
 
     public void showMoreUsers() {
+        if (gettingMoreUsers) {
+            return;
+        }
+
+        Log.d("debug", "getting users with cursor " + next_cursor);
+        // No more users to get
+        if (next_cursor == 0) {
+            return;
+        }
+
+        gettingMoreUsers = true;
         showProgressBar();
         getClient().getUsersForType(type, fromUser.getUid(), next_cursor, userArrayRequestHandler);
     }
@@ -88,10 +99,16 @@ public class UsersListFragment extends TwitterClientFragment {
         try {
             if (json.has("next_cursor")) {
                 next_cursor = json.getLong("next_cursor");
+            } else {
+                // No more users to get
+                next_cursor = 0;
             }
+            Log.d("debug", "got users with cursor" + next_cursor);
             aUsers.addAll(User.fromJsonArray(json.getJSONArray("users")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        gettingMoreUsers = false;
     }
 }
