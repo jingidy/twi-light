@@ -3,14 +3,14 @@
     tools:context="com.flukiness.twilight.activities.TimelineActivity" >
     <item android:id="@+id/action_compose"
         android:title="@string/action_compose"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_compose"
         android:orderInCategory="100"
         android:showAsAction="ifRoom" />
 
 
     <item android:id="@+id/action_profile"
         android:title="@string/action_profile"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_profile"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:onClick="onProfileView"/>

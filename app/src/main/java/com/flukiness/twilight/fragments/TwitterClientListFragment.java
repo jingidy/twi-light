@@ -5,25 +5,16 @@ package com.flukiness.twilight.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.adapters.TweetArrayAdapter;
-import com.flukiness.twilight.models.Tweet;
-import com.flukiness.twilight.models.User;
-import com.flukiness.twilight.utils.EndlessScrollingListener;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -52,12 +43,10 @@ public abstract class TwitterClientListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         lvList = (ListView)v.findViewById(R.id.lvList);
+        lvList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
         swipeContainer = (SwipeRefreshLayout)v.findViewById(R.id.swipeContainer);
-        swipeContainer.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeContainer.setColorScheme(R.color.blue,R.color.pink, R.color.yellow,R.color.red);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

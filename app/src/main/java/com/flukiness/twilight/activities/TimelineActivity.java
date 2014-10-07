@@ -29,6 +29,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        setTitle(R.string.app_name);
 
         homeTweetsFragmentListener = new FragmentTabListener<HomeTimelineListFragment>(R.id.flContainer, this, "home",
                 HomeTimelineListFragment.class);
@@ -64,8 +65,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogF
 
         Tab tab1 = actionBar
                 .newTab()
-                .setText("Home")
-                .setIcon(R.drawable.ic_launcher)
+                .setIcon(R.drawable.ic_home)
                 .setTag(TabTags.HomeTimelineTag)
                 .setTabListener(homeTweetsFragmentListener);
 
@@ -74,8 +74,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialogF
 
         Tab tab2 = actionBar
                 .newTab()
-                .setText("Mentions")
-                .setIcon(R.drawable.ic_launcher)
+                .setIcon(R.drawable.ic_mention)
                 .setTag(TabTags.MentionsTimelineTag)
                 .setTabListener(mentionsTweetsFragmentListener);
 

@@ -1,20 +1,53 @@
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="TwilightTheme.ActionBar" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@color/medium_gray</item>
+        <item name="android:backgroundStacked">@color/light_gray</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="TwilightTheme.TextView" parent="android:Widget.Holo.TextView">
+        <item name="android:textColor">@color/almost_white</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="TwilightTheme.TextView.Body" parent="TwilightTheme.TextView">
+        <item name="android:lineSpacingMultiplier">1.25</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="TwilightTheme.TextView.Name" parent="TwilightTheme.TextView">
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TwilightTheme.TextView.Username" parent="TwilightTheme.TextView">
+        <item name="android:textColor">@color/lighter_gray</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="TwilightTheme.TextView.Time" parent="TwilightTheme.TextView">
+        <item name="android:textColor">@color/lighter_gray</item>
+    </style>
+
+    <style name="TwilightTheme.ListView" parent="android:Widget.Holo.ListView">
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:listSelector">@drawable/list_item_selector</item>
+    </style>
+
+    <style name="TwilightTheme.Button" parent="android:Widget.Holo.Button">
+        <item name="android:background">@color/pink</item>
+    </style>
+
+    <style name="TwilightTheme" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/dark_gray</item>
+        <item name="android:colorBackgroundCacheHint">@color/dark_gray</item>
+        <item name="android:actionBarStyle">@style/TwilightTheme.ActionBar</item>
+        <item name="android:textViewStyle">@style/TwilightTheme.TextView</item>
+        <item name="android:listViewStyle">@style/TwilightTheme.ListView</item>
+        <item name="android:windowContentOverlay">@drawable/shadow</item>
     </style>
 
 </resources>

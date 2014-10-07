@@ -5,87 +5,127 @@
         android:layout_height="match_parent"
         class="com.flukiness.twilight.TweetView">
 
-    <view
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/ivProfileImage"
+    <FrameLayout
+        android:id="@+id/flImageContainer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/ic_launcher"
-        class="com.flukiness.twilight.views.ProfileImageView"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:id="@+id/tvName"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="body text"
-        android:id="@+id/tvBody"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:layout_below="@+id/tvName"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="\@username"
-        android:id="@+id/tvUsername"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/tvName"
-        android:layout_toRightOf="@+id/tvName"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/tvTime"
-        android:layout_toStartOf="@+id/tvTime" />
+        android:layout_marginTop="20dp"
+        >
+        <view
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/ivProfileImage"
+            class="com.flukiness.twilight.views.ProfileImageView"
+            />
+        <ImageView
+            android:id="@+id/imgMask"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/image_mask"
+            android:scaleType="fitCenter"/>
+    </FrameLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="time"
-        android:id="@+id/tvTime"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toRightOf="@+id/flImageContainer"
+        android:id="@+id/rlBodyContainer"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBody"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/llActions"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:id="@+id/tvName"
+            style="@style/TwilightTheme.TextView.Name"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="body text"
+            android:id="@+id/tvBody"
+            style="@style/TwilightTheme.TextView.Body"
+            android:layout_below="@+id/tvName"
+            android:layout_alignRight="@+id/tvTime"
+            android:layout_alignEnd="@+id/tvTime"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@username"
+            android:id="@+id/tvUsername"
+            android:layout_toEndOf="@+id/tvName"
+            android:layout_toStartOf="@+id/tvTime"
+            style="@style/TwilightTheme.TextView.Username"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/tvName"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/tvBody"
+            android:layout_toLeftOf="@+id/tvTime" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:id="@+id/tvTime"
+            style="@style/TwilightTheme.TextView.Time"
+            android:singleLine="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/tvUsername" />
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Reply"
-            android:id="@+id/btnReply"
-            android:layout_weight="1"/>
+            android:layout_alignParentBottom="true"
+            android:id="@+id/llActions"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/tvTime"
+            android:layout_alignEnd="@+id/tvTime"
+            android:layout_below="@+id/tvBody">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Retweet"
-            android:id="@+id/btnRetweet"
-            android:layout_weight="1"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Reply"
+                android:id="@+id/btnReply"
+                android:background="@drawable/twilight_button"
+                android:layout_weight="1"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Favorite"
-            android:id="@+id/btnFavorite"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Retweet"
+                android:id="@+id/btnRetweet"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Favorite"
+                android:id="@+id/btnFavorite"
+                android:background="@drawable/twilight_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </view>

@@ -55,14 +55,18 @@
                 android:layout_height="wrap_content"
                 android:text="followers"
                 android:id="@+id/btnFollowers"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"
+                />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="following"
                 android:id="@+id/btnFollowing"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/borderlessButtonStyle"
+                />
         </LinearLayout>
 
 
