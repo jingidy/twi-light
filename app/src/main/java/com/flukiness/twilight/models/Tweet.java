@@ -1,7 +1,8 @@
 package com.flukiness.twilight.models;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.flukiness.twilight.R;
 
@@ -9,17 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by Jing Jin on 9/28/14.
  */
-public class Tweet {
+public class Tweet implements Parcelable {
     private static SimpleDateFormat dateParser = new SimpleDateFormat("EEE MMM d k:m:s z yyyy");
     private static SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM d");
     private static long minInMilliseconds = 60 * 1000;
@@ -134,6 +133,40 @@ public class Tweet {
     }
 
     public boolean mentionsUser(String username) {
-        return body == null ? false : body.matches(".*\\b\\" + User.userPrefix + username + "\\b.*");
+        return body == null ? false : body.matches(".*\\b\\" + User.USER_PREFIX + username + "\\b.*");
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.body);
+        dest.writeLong(this.uid);
+        dest.writeLong(createdTime != null ? createdTime.getTime() : -1);
+        dest.writeParcelable(this.user, 0);
+    }
+
+    public Tweet() {
+    }
+
+    private Tweet(Parcel in) {
+        this.body = in.readString();
+        this.uid = in.readLong();
+        long tmpCreatedTime = in.readLong();
+        this.createdTime = tmpCreatedTime == -1 ? null : new Date(tmpCreatedTime);
+        this.user = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Tweet> CREATOR = new Parcelable.Creator<Tweet>() {
+        public Tweet createFromParcel(Parcel source) {
+            return new Tweet(source);
+        }
+
+        public Tweet[] newArray(int size) {
+            return new Tweet[size];
+        }
+    };
 }

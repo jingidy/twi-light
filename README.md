@@ -67,7 +67,7 @@ Codepath Project: Simple Twitter Client
   - [x] When a network request is sent, user sees an indeterminate progress indicator
 - Additional Actions
   - User can "reply" to any tweet on their home timeline
-    - [ ] The user that wrote the original tweet is automatically @ replied in compose
+    - [x] The user that wrote the original tweet is automatically @ replied in compose
   - [ ] User can click on a tweet to be taken to a "detail view" of that tweet, and take the following actions
     - [ ] Favorite
     - [ ] Unfavorite

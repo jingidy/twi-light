@@ -10,13 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.fragments.ComposeDialog;
+import com.flukiness.twilight.fragments.ComposeDialogFragment;
 import com.flukiness.twilight.fragments.HomeTimelineFragment;
 import com.flukiness.twilight.fragments.MentionsTimelineFragment;
 import com.flukiness.twilight.utils.FragmentTabListener;
 import com.flukiness.twilight.models.Tweet;
 
-public class TimelineActivity extends FragmentActivity implements ComposeDialog.ComposeDialogListener {
+public class TimelineActivity extends FragmentActivity implements ComposeDialogFragment.ComposeDialogListener {
     private FragmentTabListener<HomeTimelineFragment> homeTweetsFragmentListener;
     private FragmentTabListener<MentionsTimelineFragment> mentionsTweetsFragmentListener;
 
@@ -84,7 +84,7 @@ public class TimelineActivity extends FragmentActivity implements ComposeDialog.
 
     public void showComposeDialog () {
         FragmentManager fm = getSupportFragmentManager();
-        ComposeDialog dialog = ComposeDialog.newInstance();
+        ComposeDialogFragment dialog = ComposeDialogFragment.newInstance();
         dialog.show(fm, "fragment_compose");
     }
 

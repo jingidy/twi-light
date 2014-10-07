@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.flukiness.twilight.R;
+import com.flukiness.twilight.TweetView;
 import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.views.ProfileImageView;
@@ -19,15 +21,6 @@ import java.util.ArrayList;
  * Created by Jing Jin on 9/28/14.
  */
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
-    private static ImageLoader imageLoader = ImageLoader.getInstance();
-
-    public static class ViewHolder {
-        ProfileImageView ivProfileImage;
-        TextView tvUsername;
-        TextView tvBody;
-        TextView tvName;
-        TextView tvTime;
-    }
 
     public TweetArrayAdapter(Context context, ArrayList<Tweet> objects) {
         super(context, R.layout.tweet_list_item, objects);
@@ -36,30 +29,14 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Tweet t = getItem(position);
-        ViewHolder viewHolder; // view lookup cache stored in tag
+
+        TweetView v = (TweetView) convertView;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.tweet_list_item, parent, false);
-            viewHolder.ivProfileImage = (ProfileImageView) convertView.findViewById(R.id.ivProfileImage);
-            viewHolder.tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
-            viewHolder.tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-            viewHolder.tvName = (TextView) convertView.findViewById(R.id.tvName);
-            viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tvTime);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            v = TweetView.createView(getContext(), parent);
         }
 
-        User u = t.getUser();
-        viewHolder.ivProfileImage.setUser(u);
-        viewHolder.tvName.setText(u.getName());
-        viewHolder.tvUsername.setText(u.getScreenName());
-        viewHolder.tvBody.setText(t.getBody());
-        viewHolder.tvTime.setText(t.getCreatedTimeUIString(getContext()));
-        viewHolder.ivProfileImage.setTag(u);
-        imageLoader.displayImage(u.getProfileImageUrl(), viewHolder.ivProfileImage);
-        return convertView;
+        v.setTweet(t);
+        return v;
     }
 
     public Tweet getOldest() {
@@ -75,4 +52,5 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         }
         return getItem(0);
     }
+
 }

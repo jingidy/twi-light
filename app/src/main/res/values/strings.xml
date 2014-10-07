@@ -24,5 +24,6 @@
     <string name="title_activity_users">UsersActivity</string>
     <string name="followers_title">Followers</string>
     <string name="following_title">Following</string>
+    <string name="reply_title">Reply</string>
 
 </resources>

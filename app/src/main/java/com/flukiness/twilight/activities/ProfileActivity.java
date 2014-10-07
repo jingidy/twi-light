@@ -13,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flukiness.twilight.R;
+import com.flukiness.twilight.fragments.ComposeDialogFragment;
+import com.flukiness.twilight.fragments.HomeTimelineFragment;
+import com.flukiness.twilight.fragments.MentionsTimelineFragment;
 import com.flukiness.twilight.fragments.ProfileTimelineFragment;
+import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
 import com.flukiness.twilight.utils.TwitterApplication;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,11 +25,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONObject;
 
-public class ProfileActivity extends FragmentActivity {
+public class ProfileActivity extends FragmentActivity implements ComposeDialogFragment.ComposeDialogListener {
 
     public static final String USER_KEY = "user";
 
     private User user;
+    ProfileTimelineFragment fragmentUserTimeline;
     JsonHttpResponseHandler userRequestHandler;
 
     @Override
@@ -35,7 +40,7 @@ public class ProfileActivity extends FragmentActivity {
         user = (User)getIntent().getParcelableExtra(USER_KEY);
 
         // Set up a user timeline fragment with the user ID, then load it into th eview.
-        ProfileTimelineFragment fragmentUserTimeline = new ProfileTimelineFragment();
+        fragmentUserTimeline = new ProfileTimelineFragment();
         fragmentUserTimeline.setUser(user);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flUserTimeline, fragmentUserTimeline);
@@ -127,5 +132,10 @@ public class ProfileActivity extends FragmentActivity {
         Intent i = new Intent(this, FollowingActivity.class);
         i.putExtra(USER_KEY, this.user);
         startActivity(i);
+    }
+
+    @Override
+    public void onTweetPosted(Tweet t) {
+        fragmentUserTimeline.onTweetPosted(t);
     }
 }

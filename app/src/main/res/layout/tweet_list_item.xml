@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.flukiness.twilight.TweetView">
 
     <view
         android:layout_width="40dp"
@@ -30,7 +32,9 @@
         android:id="@+id/tvBody"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:layout_below="@+id/tvName"
-        android:layout_toRightOf="@+id/ivProfileImage" />
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +44,9 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/tvName"
         android:layout_toRightOf="@+id/tvName"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/tvTime"
+        android:layout_toStartOf="@+id/tvTime" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,4 +56,36 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-</RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/llActions"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Reply"
+            android:id="@+id/btnReply"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Retweet"
+            android:id="@+id/btnRetweet"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Favorite"
+            android:id="@+id/btnFavorite"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</view>

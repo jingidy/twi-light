@@ -1,7 +1,5 @@
 package com.flukiness.twilight.fragments;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -19,10 +17,9 @@ import com.flukiness.twilight.utils.TwitterApplication;
 import com.flukiness.twilight.utils.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ComposeDialog extends DialogFragment {
+public class ComposeDialogFragment extends DialogFragment {
 
     private EditText etTweetText;
     private Button btnSubmit;
@@ -31,18 +28,17 @@ public class ComposeDialog extends DialogFragment {
         void onTweetPosted(Tweet t);
     }
 
-    public static ComposeDialog newInstance() {
-        ComposeDialog fragment = new ComposeDialog();
+    public static ComposeDialogFragment newInstance() {
+        ComposeDialogFragment fragment = new ComposeDialogFragment();
         return fragment;
     }
-    public ComposeDialog() {
+    public ComposeDialogFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getDialog().setTitle(R.string.compose_title);
         View v = inflater.inflate(R.layout.fragment_compose, container, false);
         etTweetText = (EditText) v.findViewById(R.id.etTweetText);
         btnSubmit = (Button) v.findViewById(R.id.btnSubmit);
@@ -58,6 +54,14 @@ public class ComposeDialog extends DialogFragment {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         return v;
+    }
+
+    public EditText getEtTweetText() {
+        return etTweetText;
+    }
+
+    public Button getBtnSubmit() {
+        return btnSubmit;
     }
 
     public void sendTweet() {
@@ -82,7 +86,7 @@ public class ComposeDialog extends DialogFragment {
         Tweet t = Tweet.fromJson(jsonObject);
         if (t == null) {
             Log.d("DEBUG", "successfully posted tweet but  no tweet json");
-        } else {
+        } else if(getActivity() instanceof  ComposeDialogListener) {
             ComposeDialogListener listener = (ComposeDialogListener) getActivity();
             listener.onTweetPosted(t);
         }

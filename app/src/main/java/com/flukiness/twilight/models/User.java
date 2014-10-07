@@ -1,9 +1,7 @@
 package com.flukiness.twilight.models;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
  * Created by Jing Jin on 9/28/14.
  */
 public class User implements Parcelable {
-    public static final String userPrefix = "@";
+    public static final String USER_PREFIX = "@";
 
     private String name;
     private long uid;
@@ -104,7 +102,7 @@ public class User implements Parcelable {
     }
 
     public String getScreenNameUIString() {
-        return userPrefix + screenName;
+        return USER_PREFIX + screenName;
     }
 
     public int getNumFollowing() {
