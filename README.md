@@ -67,7 +67,7 @@ Codepath Project: Simple Twitter Client
 - Additional Actions
   - User can "reply" to any tweet on their home timeline
     - [x] The user that wrote the original tweet is automatically @ replied in compose
-  - [ ] User can click on a tweet to be taken to a "detail view" of that tweet, and take the following actions
+  - [x] User can click on a tweet to be taken to a "detail view" of that tweet, and take the following actions
     - [ ] Favorite
     - [ ] Unfavorite
     - [ ] Retweet

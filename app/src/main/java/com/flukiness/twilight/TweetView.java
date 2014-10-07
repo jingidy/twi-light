@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class TweetView extends RelativeLayout {
     public TextView tvBody;
     public TextView tvName;
     public TextView tvTime;
+    public LinearLayout llActions;
     public Button btnReply;
     public Button btnRetweet;
     public Button btnFavorite;
@@ -45,12 +47,19 @@ public class TweetView extends RelativeLayout {
         v.tvBody = (TextView) v.findViewById(R.id.tvBody);
         v.tvName = (TextView) v.findViewById(R.id.tvName);
         v.tvTime = (TextView) v.findViewById(R.id.tvTime);
+        v.llActions = (LinearLayout) v.findViewById(R.id.llActions);
         v.btnReply = (Button) v.findViewById(R.id.btnReply);
         v.btnRetweet = (Button) v.findViewById(R.id.btnRetweet);
         v.btnFavorite = (Button) v.findViewById(R.id.btnFavorite);
 
-        // Remember the view so it can get the username from it.
-        v.btnReply.setTag(v);
+        v.llActions.setVisibility(GONE);
+        v.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                v.toggleActionsVisibility(view);
+            }
+        });
+
         v.btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,5 +131,13 @@ public class TweetView extends RelativeLayout {
 
     public void favoriteButtonClicked(View v) {
 
+    }
+
+    public void toggleActionsVisibility(View v) {
+        if (llActions.getVisibility() == VISIBLE) {
+            llActions.setVisibility(GONE);
+        } else {
+            llActions.setVisibility(VISIBLE);
+        }
     }
 }
