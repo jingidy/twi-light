@@ -1,19 +1,13 @@
 package com.flukiness.twilight.adapters;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.flukiness.twilight.R;
-import com.flukiness.twilight.TweetView;
+import com.flukiness.twilight.views.TweetView;
 import com.flukiness.twilight.models.Tweet;
-import com.flukiness.twilight.models.User;
-import com.flukiness.twilight.views.ProfileImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 

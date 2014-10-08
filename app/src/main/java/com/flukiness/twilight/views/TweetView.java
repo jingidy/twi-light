@@ -1,4 +1,4 @@
-package com.flukiness.twilight;
+package com.flukiness.twilight.views;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,11 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.flukiness.twilight.fragments.ComposeDialogFragment;
+import com.flukiness.twilight.R;
 import com.flukiness.twilight.fragments.ReplyDialogFragment;
 import com.flukiness.twilight.models.Tweet;
 import com.flukiness.twilight.models.User;
-import com.flukiness.twilight.views.ProfileImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -31,7 +30,7 @@ public class TweetView extends RelativeLayout {
     public TextView tvBody;
     public TextView tvName;
     public TextView tvTime;
-    public LinearLayout llActions;
+    public RelativeLayout rlActions;
     public Button btnReply;
     public Button btnRetweet;
     public Button btnFavorite;
@@ -47,12 +46,12 @@ public class TweetView extends RelativeLayout {
         v.tvBody = (TextView) v.findViewById(R.id.tvBody);
         v.tvName = (TextView) v.findViewById(R.id.tvName);
         v.tvTime = (TextView) v.findViewById(R.id.tvTime);
-        v.llActions = (LinearLayout) v.findViewById(R.id.llActions);
+        v.rlActions = (RelativeLayout) v.findViewById(R.id.rlActions);
         v.btnReply = (Button) v.findViewById(R.id.btnReply);
         v.btnRetweet = (Button) v.findViewById(R.id.btnRetweet);
         v.btnFavorite = (Button) v.findViewById(R.id.btnFavorite);
 
-        v.llActions.setVisibility(GONE);
+        v.rlActions.setVisibility(GONE);
         v.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,10 +133,10 @@ public class TweetView extends RelativeLayout {
     }
 
     public void toggleActionsVisibility(View v) {
-        if (llActions.getVisibility() == VISIBLE) {
-            llActions.setVisibility(GONE);
+        if (rlActions.getVisibility() == VISIBLE) {
+            rlActions.setVisibility(GONE);
         } else {
-            llActions.setVisibility(VISIBLE);
+            rlActions.setVisibility(VISIBLE);
         }
     }
 }

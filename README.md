@@ -11,7 +11,7 @@ Codepath Project: Simple Twitter Client
 
 ### Part 2
 
-8 hours 30 minutes
+17 hours
 
 # Completed User Stories
 
@@ -53,7 +53,6 @@ Codepath Project: Simple Twitter Client
 - [ ] User can see embedded image media within the tweet detail view
 - Additional Actions
   - [x] User can refresh tweets timeline by pulling down to refresh
-  - [ ] User can tap a tweet to display a "detailed" view of that tweet
 - Persistence
   - [ ] User can open the twitter app offline and see last loaded tweets. Tweets are persisted into SQLite and acan be displayed from the local DB
 - UI Improvements
@@ -67,7 +66,7 @@ Codepath Project: Simple Twitter Client
 - Additional Actions
   - User can "reply" to any tweet on their home timeline
     - [x] The user that wrote the original tweet is automatically @ replied in compose
-  - [x] User can click on a tweet to be taken to a "detail view" of that tweet, and take the following actions
+  - [ ] User can click on a tweet to be taken to a "detail view" of that tweet, and take the following actions
     - [ ] Favorite
     - [ ] Unfavorite
     - [ ] Retweet
@@ -81,7 +80,7 @@ Codepath Project: Simple Twitter Client
     - [ ] Handle error cases
     - [ ] Handle network failures
 - UI Improvements
-  - [ ] Improve the user interface and theme the app to feel "twitter branded"
+  - [x] Improve the user interface and theme the app to feel "twitter branded" (or not)
 
 # Walkthrough of All User Stories
 

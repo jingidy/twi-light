@@ -19,8 +19,8 @@
     <string name="label_tweeting">Tweeting...</string>
     <string name="action_profile">Profile</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="posfix_followers_label"> followers</string>
-    <string name="posfix_following_label"> following</string>
+    <string name="posfix_followers_label">Followers</string>
+    <string name="posfix_following_label">Following</string>
     <string name="title_activity_users">UsersActivity</string>
     <string name="followers_title">Followers</string>
     <string name="following_title">Following</string>

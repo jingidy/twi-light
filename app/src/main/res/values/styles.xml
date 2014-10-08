@@ -37,6 +37,11 @@
         <item name="android:listSelector">@drawable/list_item_selector</item>
     </style>
 
+    <style name="TwilightTheme.ProfileListView" parent="android:Widget.Holo.ListView">
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:listSelector">@drawable/list_item_selector</item>
+    </style>
+
     <style name="TwilightTheme.Button" parent="android:Widget.Holo.Button">
         <item name="android:background">@color/pink</item>
     </style>

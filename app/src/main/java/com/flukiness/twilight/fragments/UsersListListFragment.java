@@ -59,6 +59,8 @@ public class UsersListListFragment extends TwitterClientListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
+        getLvList().setDividerHeight(1);
+        getLvList().setDivider(getResources().getDrawable(android.R.drawable.divider_horizontal_dark));
         getLvList().setAdapter(aUsers);
         getLvList().setOnScrollListener(new EndlessScrollingListener() {
             @Override

@@ -11,63 +11,94 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
         android:id="@+id/rlHeader">
-        
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/ivProfileImage" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:id="@+id/tvName"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="tagline"
-            android:id="@+id/tvTagline"
-            android:layout_below="@+id/tvName"
-            android:layout_toRightOf="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage" />
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivProfileImage"
+            android:id="@+id/rlPersonContainer"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/ivProfileImage"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvName"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/ivProfileImage"
+                style="@style/TwilightTheme.TextView.Name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTagline"
+                android:layout_below="@+id/tvName"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/ivProfileImage"
+                style="@style/TwilightTheme.TextView.Body"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlPersonContainer"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:id="@+id/flActionContainer"
+            android:background="@color/light_gray">
 
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="followers"
-                android:id="@+id/btnFollowers"
-                android:layout_weight="1"
-                style="?android:attr/borderlessButtonStyle"
-                />
+                android:background="@color/medium_gray"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="following"
-                android:id="@+id/btnFollowing"
-                android:layout_weight="1"
-                style="?android:attr/borderlessButtonStyle"
-                />
-        </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnFollowers"
+                    android:layout_weight="1"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/twilight_button"
+                    />
+
+                <View
+                    android:id="@+id/ViewColorPickerHelper"
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dip"
+                    android:layout_marginTop="4dip"
+                    android:background="?android:attr/dividerVertical"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnFollowing"
+                    android:layout_weight="1"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/twilight_button"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+
 
 
     </RelativeLayout>

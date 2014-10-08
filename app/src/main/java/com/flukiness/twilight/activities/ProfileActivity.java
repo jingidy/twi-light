@@ -48,7 +48,7 @@ public class ProfileActivity extends FragmentActivity implements ComposeDialogFr
             @Override
             public void onSuccess(JSONObject json) {
                 User u = User.fromJson(json);
-                getActionBar().setTitle(u.getScreenName());
+                getActionBar().setTitle(User.USER_PREFIX + u.getScreenName());
                 populateProfileHeader(u);
             }
 
@@ -100,8 +100,8 @@ public class ProfileActivity extends FragmentActivity implements ComposeDialogFr
 
         tvName.setText(u.getName());
         tvTagline.setText(u.getDescription());
-        btnFollowers.setText(u.getNumFollowers() + getString(R.string.posfix_followers_label));
-        btnFollowing.setText(u.getNumFollowing() + getString(R.string.posfix_following_label));
+        btnFollowers.setText(u.getNumFollowers() + " " + getString(R.string.posfix_followers_label));
+        btnFollowing.setText(u.getNumFollowing() + " " + getString(R.string.posfix_following_label));
 
         btnFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
